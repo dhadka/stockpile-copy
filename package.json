@@ -39,6 +39,6 @@
     "@actions/core": "^1.2.5",
     "@actions/github": "^4.0.0",
     "@zeit/ncc": "^0.22.3",
-    "gh-stockpile": "file:../stockpile"
+    "gh-stockpile": "^1.0.1"
   }
 }
