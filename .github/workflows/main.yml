@@ -10,17 +10,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
+
     steps:
       - uses: actions/checkout@v2
+
+      - name: Restore cache
+        id: restore-cache
+        uses: dhadka/stockpile-copy@master
+        with:
+          src: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          dest: cache.tgz
+          if-not-found: skip
+
+      - name: Extract cache
+        if: steps.restore-cache.outputs.successful == 'true'
+        run: tar -xzf cache.tgz -P
         
       - run: npm install
         
       - name: Create cache
+        if: steps.restore-cache.outputs.successful != 'true'
         run: tar -czf cache.tgz -P ~/.npm
       
-      - uses: dhadka/stockpile-copy@master
+      - name: Upload cache
+        uses: dhadka/stockpile-copy@master
+        if: steps.restore-cache.outputs.successful != 'true'
         with:
           src: cache.tgz
           dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        env:
-          SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
