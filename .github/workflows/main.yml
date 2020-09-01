@@ -20,7 +20,7 @@ jobs:
         id: restore-cache
         uses: dhadka/stockpile-copy@master
         with:
-          src: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          src: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node2-${{ hashFiles('**/package-lock.json') }}
           dest: cache.tgz
           if-not-found: skip
 
@@ -39,4 +39,4 @@ jobs:
         if: steps.restore-cache.outputs.successful != 'true'
         with:
           src: cache.tgz
-          dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node2-${{ hashFiles('**/package-lock.json') }}
