@@ -28,7 +28,7 @@ jobs:
         if: steps.restore-cache.outputs.successful == 'true'
         run: tar -xzf cache.tgz -P
         
-      - run: npm install
+      - run: npm ci
         
       - name: Create cache
         if: steps.restore-cache.outputs.successful != 'true'
