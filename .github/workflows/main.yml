@@ -22,3 +22,5 @@ jobs:
         with:
           src: cache.tgz
           dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        env:
+          SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
