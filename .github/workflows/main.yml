@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        
+      - run: npm install
+        
+      - name: Create cache
+        run: tar -czf cache.tgz -P ~/.npm
+      
+      - uses: dhadka/stockpile-copy@fc9b6fb1baaf645802fba33fbb07b168651f3e24
+        with:
+          src: cache.tgz
+          dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
