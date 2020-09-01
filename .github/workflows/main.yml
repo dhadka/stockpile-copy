@@ -18,7 +18,7 @@ jobs:
       - name: Create cache
         run: tar -czf cache.tgz -P ~/.npm
       
-      - uses: dhadka/stockpile-copy@fc9b6fb1baaf645802fba33fbb07b168651f3e24
+      - uses: dhadka/stockpile-copy@master
         with:
           src: cache.tgz
           dest: https://dhadkatest.blob.core.windows.net/cache/${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
