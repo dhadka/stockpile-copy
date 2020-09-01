@@ -1,0 +1,20 @@
+name: 'Stockpile Copy'
+description: 'Copy content to or from storage'
+inputs:
+  src:
+    description: 'The source file'
+    required: true
+  dest:
+    description: 'The destination file'
+    required: true
+  ttl:
+    description: 'The duration the file should live in storage'
+  if-not-found:
+    description: 'The action to take if the file is not found'
+    default: 'fail'
+outputs:
+  successful:
+    description: 'true when the copy succeeded, false otherwise'
+runs:
+  using: 'node12'
+  main: 'index.js'
