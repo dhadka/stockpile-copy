@@ -23077,11 +23077,13 @@ function copy() {
         let blobName = undefined;
         let filePath = undefined;
         if (src.indexOf("://")) {
+            console.log(`Src: ${src}`);
             client = gh_stockpile_1.Stockpile.createClient(src);
             blobName = gh_stockpile_1.Stockpile.getBlobName(src);
             filePath = dest;
         }
-        if (dest.indexOf("://")) {
+        else if (dest.indexOf("://")) {
+            console.log(`Dest: ${dest}`);
             client = gh_stockpile_1.Stockpile.createClient(dest);
             blobName = gh_stockpile_1.Stockpile.getBlobName(dest);
             filePath = src;

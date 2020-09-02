@@ -12,12 +12,12 @@ async function copy() {
     let filePath: string | undefined = undefined
 
     if (src.indexOf("://")) {
+        console.log(`Src: ${src}`)
         client = Stockpile.createClient(src)
         blobName = Stockpile.getBlobName(src)
         filePath = dest
-    }
-
-    if (dest.indexOf("://")) {
+    } else if (dest.indexOf("://")) {
+        console.log(`Dest: ${dest}`)
         client = Stockpile.createClient(dest)
         blobName = Stockpile.getBlobName(dest)
         filePath = src
@@ -30,7 +30,9 @@ async function copy() {
     try {
         if (filePath === src) {
             await client.createContainerIfNotExists()
-            await client.uploadFile(filePath, blobName)
+            await client.uploadFile(filePath, blobName, {
+                ttl: ttl === "" ? undefined : ttl
+            })
         } else {
             await client.downloadFile(blobName, filePath)
         }
