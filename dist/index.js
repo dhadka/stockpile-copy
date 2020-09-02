@@ -23076,14 +23076,12 @@ function copy() {
         let client = undefined;
         let blobName = undefined;
         let filePath = undefined;
-        if (src.indexOf("://")) {
-            console.log(`Src: ${src}`);
+        if (src.indexOf("://") >= 0) {
             client = gh_stockpile_1.Stockpile.createClient(src);
             blobName = gh_stockpile_1.Stockpile.getBlobName(src);
             filePath = dest;
         }
-        else if (dest.indexOf("://")) {
-            console.log(`Dest: ${dest}`);
+        else if (dest.indexOf("://") >= 0) {
             client = gh_stockpile_1.Stockpile.createClient(dest);
             blobName = gh_stockpile_1.Stockpile.getBlobName(dest);
             filePath = src;
@@ -23094,7 +23092,9 @@ function copy() {
         try {
             if (filePath === src) {
                 yield client.createContainerIfNotExists();
-                yield client.uploadFile(filePath, blobName);
+                yield client.uploadFile(filePath, blobName, {
+                    ttl: ttl === "" ? undefined : ttl
+                });
             }
             else {
                 yield client.downloadFile(blobName, filePath);
@@ -23110,7 +23110,10 @@ function copy() {
         core.setOutput("successful", "true");
     });
 }
-copy().catch((e) => core.error(e));
+copy().catch((e) => {
+    core.error(e);
+    process.exit(-1);
+});
 
 
 /***/ }),

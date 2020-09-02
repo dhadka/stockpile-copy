@@ -11,13 +11,11 @@ async function copy() {
     let blobName: string | undefined = undefined
     let filePath: string | undefined = undefined
 
-    if (src.indexOf("://")) {
-        console.log(`Src: ${src}`)
+    if (src.indexOf("://") >= 0) {
         client = Stockpile.createClient(src)
         blobName = Stockpile.getBlobName(src)
         filePath = dest
-    } else if (dest.indexOf("://")) {
-        console.log(`Dest: ${dest}`)
+    } else if (dest.indexOf("://") >= 0) {
         client = Stockpile.createClient(dest)
         blobName = Stockpile.getBlobName(dest)
         filePath = src
@@ -49,4 +47,7 @@ async function copy() {
     core.setOutput("successful", "true")
 }
 
-copy().catch((e) => core.error(e))
+copy().catch((e) => {
+    core.error(e)
+    process.exit(-1)
+})
