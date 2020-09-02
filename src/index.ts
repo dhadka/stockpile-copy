@@ -13,11 +13,11 @@ async function copy() {
 
     if (src.indexOf("://") >= 0) {
         client = Stockpile.createClient(src)
-        blobName = Stockpile.getBlobName(src)
+        blobName = client.getBlobName(src)
         filePath = dest
     } else if (dest.indexOf("://") >= 0) {
         client = Stockpile.createClient(dest)
-        blobName = Stockpile.getBlobName(dest)
+        blobName = client.getBlobName(dest)
         filePath = src
     }
 
@@ -38,6 +38,7 @@ async function copy() {
         core.setOutput("successful", "false")
 
         if (error.statusCode && error.statusCode == 404 && ifNotFound === 'skip') {
+            core.info("Not Found")
             return
         }
 
