@@ -14,4 +14,4 @@ jobs:
     steps:
     - uses: dhadka/stockpile-cleanup@master
       with:
-        path: https://dhadkatest.blob.core.windows.net/cache
+        path: https://dhadkatest.blob.core.windows.net/cache/
