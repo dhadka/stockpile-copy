@@ -1,0 +1,17 @@
+name: Cleanup
+
+on:
+  schedule:
+    - cron: 5 * * * *
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      SAS_TOKEN: ${{ secrets.SAS_TOKEN }}
+
+    steps:
+    - uses: dhadka/stockpile-cleanup@master
+      with:
+        path: https://dhadkatest.blob.core.windows.net/cache
